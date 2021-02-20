@@ -1,14 +1,17 @@
 all: install
 
-DSSFILE="/usr/local/bin/dss"
+localBin="/usr/local/bin/"
+
+dssFile="$(localBin)dss"
+tokenFile="$(localBin).token.txt"
 
 install:
-	cp ./status $(DSSFILE)
-	chmod +x $(DSSFILE)
+	cp ./status $(dssFile)
+	chmod +x $(dssFile)
 
 update:
 	git pull https://github.com/PoseidonCoder/DiscordStatusSwitcher.git master
 
 uninstall:
-	rm -f $(DSSFILE) /usr/local/bin/.token.txt
+	rm -f $(dssFile) $(tokenFile)
 

@@ -1,8 +1,31 @@
 #!/bin/bash
 
 createToken() {
-	echo "Discord Token>" && read AUTH && echo $AUTH > token.txt
+	echo -n "Discord Token> " && read AUTH && echo $AUTH > token.txt
 }
 
 TOKEN=$(cat token.txt) || createToken
-echo $TOKEN
+USER_AGENT="Mozilla/5.0 (Windows NT 10.0; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) discord/0.0.309 Chrome/83.0.4103.122 Electron/9.3.5 Safari/537.36"
+
+switchStatus() {
+	DATE=$(date --iso-8601 -d "$(date) + 1 day")
+	FORMAT="T08:00:00.000Z"
+
+	STATUS='{"custom_status":{"text":"'"$*"'","expires_at":"'"$DATE$FORMAT"'"}}'
+	curl -X PATCH -H "content-type: application/json" -H "authorization: $TOKEN" -A "$USER_AGENT" -d "$STATUS" "https://discord.com/api/v8/users/@me/settings"
+}
+
+fetchQuote() {
+	RAW_QUOTE=$(curl "http://quotes.rest/qod.json?category=funny" | jq ".contents.quotes[0]")
+	QUOTE=$(echo $RAW_QUOTE | jq -r ".quote")
+	AUTHOR=$(echo $RAW_QUOTE | jq -r ".author")
+	
+	echo "$QUOTE - $AUTHOR"
+}
+
+switchStatusToQuote() {
+	echo "Switching quote..."
+	echo $(switchStatus $(fetchQuote))
+}
+
+watch -n 86400 echo $(switchStatusToQuote)

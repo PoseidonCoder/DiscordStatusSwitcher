@@ -11,6 +11,7 @@ install:
 
 update:
 	git pull https://github.com/PoseidonCoder/DiscordStatusSwitcher.git master
+	install
 
 uninstall:
 	rm -f $(dssFile) $(tokenFile)

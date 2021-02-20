@@ -12,3 +12,9 @@ $ git clone https://github.com/PoseidonCoder/DiscordStatusSwitcher.git
 $ cd DiscordStatusSwitcher/
 $ sudo make
 ```
+### Usage
+To activate DSS simply type the following command,
+```bash
+$ dss
+```
+> NOTE: this will not work if you have not followed the installation guide correctly

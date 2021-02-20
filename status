@@ -1,0 +1,8 @@
+#!/bin/bash
+
+createToken() {
+	echo "Discord Token>" && read AUTH && echo $AUTH > token.txt
+}
+
+TOKEN=$(cat token.txt) || createToken
+echo $TOKEN

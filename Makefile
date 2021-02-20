@@ -13,6 +13,6 @@ update:
 	git pull https://github.com/PoseidonCoder/DiscordStatusSwitcher.git master
 	install
 
-uninstall:
+clean:
 	rm -f $(dssFile) $(tokenFile)
 
